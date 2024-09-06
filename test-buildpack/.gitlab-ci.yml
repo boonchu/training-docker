@@ -1,0 +1,25 @@
+variables:
+  IMAGE_URL: mlkmhd/test-buildpack
+  BP_JVM_VERSION: 17
+
+stages:
+  - build
+
+build_image:
+  stage: build
+  image: paketobuildpacks/builder:full
+  script: |
+    set -xe
+    env
+    mkdir ~/.docker
+    cp ${DOCKER_AUTH_CONFIG} ~/.docker/config.json
+
+    /cnb/lifecycle/creator \
+      -app=${PWD} \
+      -uid=1000 \
+      -gid=1000 \
+      -platform=/platform \
+      -process-type=web \
+      -skip-restore=true \
+      -previous-image=${IMAGE_URL} \
+      ${IMAGE_URL}
