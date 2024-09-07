@@ -1,3 +1,6 @@
+**** video ****
+https://www.youtube.com/watch?v=d_L_AZyocWA
+
 **** setup ****
 
 RUN "curl -s "https://get.sdkman.io" | bash" to install sdkman
