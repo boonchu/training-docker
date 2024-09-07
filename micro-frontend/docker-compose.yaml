@@ -1,0 +1,16 @@
+services:
+  users:
+    image: users
+    build:
+      context: "./users"
+      dockerfile: "../Dockerfile"
+    ports:
+      - "4000"
+
+  orders:
+    image: orders
+    build:
+      context: "./orders"
+      dockerfile: "../Dockerfile"
+    ports:
+      - "3000"
