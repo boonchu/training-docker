@@ -1,0 +1,22 @@
+Follow https://docs.docker.com/engine/install/ubuntu/
+see /etc/init.d/docker
+
+sudo service docker stop
+
+Run sudo update-alternatives --config iptables
+Enter 1 to select iptables-legacy
+
+sudo service docker start
+
+cat /etc/init.d/docker
+tail /var/log/docker.log
+
+sudo docker info
+
+sudo groupadd --system docker
+sudo usermod -aG docker bigchoo
+
+exit from current wsl and re-enter
+
+docker run hello-world
+docker run -it docker.io/library/alpine:latest

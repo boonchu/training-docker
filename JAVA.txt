@@ -1,0 +1,23 @@
+sudo apt update
+sudo apt install zip
+curl -s https://get.sdkman.io | bash
+source "/home/bigchoo/.sdkman/bin/sdkman-init.sh"
+
+sdk version
+sdk install java 17.0.7-amzn
+sdk install kotlin
+
+kotlin -version
+
+vim hello-kotlin.kt
+
+fun main() {    
+  println("Hello, Geek!")
+}
+
+kotlinc hello-kotlin.kt -include-runtime -d hello-kotlin.jar
+java -jar hello-kotlin.jar
+
+sdk install maven
+
+maven --version
