@@ -1,0 +1,17 @@
+API Gateway: It is the entry point to access any microservices and we can implement cross-cutting concerns here such as Security, Rate Limit and Load Balance. We can use Spring Cloud Zuul or Spring Cloud Gateway to implement this.
+
+Service Discovery: Allow services to find each other via a name instead of an IP. Why not IP? Because IP often changes at runtime due to how often containers get spun up and destroy. We can use Spring Cloud Eureka or Kubernetes service to implement this.
+
+Circuit breaker: This pattern is really helpful when dealing with transient errors. For instance, when service a called service b and service b is unavailable (timeout) it could return a cache result as the default response or fallback to make a request to another helper service to get the result and allow service b to recover without trying to make more requests to it. We can use Hystrix or Resilient4J to implement this.
+
+Bulkhead: This pattern helps deal with fault-tolerant related to the thread pool by dividing the thread pool based on the number of services that needed to be called. For example, we defined a 50-thread pool in service A and service A will make requests to service B and C. So, service A should divide the 50-thread pool into 2 (25 for service B, another 25 for service C) so if service C is unavailable or takes longer time to process the request, it doesn’t affect the service B call because it has its own thread pool to perform the job. We can use Resilient4J to implement this.
+
+CQRS: we could separate Command(write) and Query(read) which means we could design a database table optimize for write and read differently for scalability.
+Event Driven Pattern: This pattern enables loose coupling between services which means services don’t have to know each other in order to communicate. The communication protocol is usually through events using Messaging Queue such as AMQP(RabbitMQ) or Apache Kafka.
+Saga: As we know dealing with distributed system is hard especially when it comes down to distributed transactions; 2 Phase commit was the best option but due to its nature of pessimistic lock makes it hard to scale which is why the Saga patterns come into play. There are ways to implement the Saga pattern which are Orchestration and Choreography.
+
+Strangler Pattern: This is a way to decompose a monolith application into microservices by gradually extracting each feature from the monolith app into individual microservice and letting the monolithic application call that new microservices instead. When building new features start with building a new microservice instead of creating that new feature inside the monolith app. The extraction could also include creating a new database for that new services.
+
+Sidecar: Probably one of the coolest patterns to know. Why? because it is a way to attach cross-cutting concern services as a sidecar to the actual business service. It is usually done by deploying a sidecar service in the same pod as the actual business service. Use case: service-service secure communication, implement logging or metric. We can use Envoy proxy as a sidecar.
+
+BFF: Also known as Backend for Frontend. Implementing microservices for each platform enables more customization/optimization based on each platform. For example, a Mobile app might not need large-size pictures or videos like web apps but keep in mind that the service could be redundant.
