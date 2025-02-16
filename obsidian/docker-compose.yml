@@ -1,0 +1,25 @@
+# project: https://github.com/sytone/obsidian-remote
+# PR discussion: https://github.com/sytone/obsidian-remote/issues/56
+services:
+  obsidian:
+    build:
+      context: ./obsidian-remote
+      dockerfile: Dockerfile
+    container_name: obsidian-remote
+    restart: unless-stopped
+    hostname: obsidian-remote
+    ports:
+      - 3001:8080
+      - 3002:8443
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: curl -f http://localhost:8080/ || exit 1
+    volumes:
+      - /home/bigchoo/training-docker/obsidian/vaults:/vaults
+      - /home/bigchoo/training-docker/obsidian/config:/config
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=America/Los_Angeles
+      - DOCKER_MODS=linuxserver/mods:universal-git
